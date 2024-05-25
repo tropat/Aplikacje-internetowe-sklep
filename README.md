@@ -134,25 +134,35 @@ Mikroserwis logowania:
 
   RESPONSE {id, name, quantity}
 
-- POST /orders
+- POST /packages
 
   BODY {products, address}
 
-  RESPONSE {id, products, address, order_status}
+  RESPONSE {id, products, address, deliverer_id, delivery_status}
 
-- GET /orders
+- GET /packages
 
-  RESPONSE {list: [{id, products, address, order_status}, …]}
+  RESPONSE {list: [{id, products, address, deliverer_id, delivery_status}, …]}
 
-- GET /orders/:id
+- GET /packages/:id
 
-  RESPONSE {id, products, address, order_status}
+  RESPONSE {id, products, address, deliverer_id, delivery_status}
 
-- PUT /orders/:id
+- GET /packages/deliverer/:deliverer_id
+
+  RESPONSE {list: [{id, products, address, deliverer_id, delivery_status}, …]}
+
+- PUT /packages/status/:id
 
   BODY {order_status}
 
-  RESPONSE {status}
+  RESPONSE {id, products, address, deliverer_id, delivery_status}
+
+- PUT /packages/deliverer/:id
+
+  BODY {order_status}
+
+  RESPONSE {id, products, address, deliverer_id, delivery_status}
 
 ### Routing
 
