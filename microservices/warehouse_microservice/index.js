@@ -1,20 +1,20 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const { sequelize } = require('./models');
+const { initDb } = require('./models/index');
+const productRoutes = require('./routes/productRoutes');
+const packageRoutes = require('./routes/packageRoutes')
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3321;
 
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use('/products', productRoutes);
+app.use('/packages', packageRoutes);
 
-sequelize.sync().then(() => {
+initDb().then(() => {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
 }).catch(err => {
-  console.log('Error: ', err);
+  console.error('Unable to connect to the database:', err);
 });
