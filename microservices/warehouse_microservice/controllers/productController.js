@@ -1,5 +1,14 @@
 const { Product } = require('../models');
 
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.findAll();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve products' });
+  }
+};
+
 const getProductById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -14,4 +23,7 @@ const getProductById = async (req, res) => {
   }
 };
 
-module.exports = getProductById;
+module.exports = {
+  getAllProducts,
+  getProductById
+};

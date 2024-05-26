@@ -1,12 +1,14 @@
 const express = require('express');
 const { initDb } = require('./models/index');
 const productRoutes = require('./routes/productRoutes');
-const packageRoutes = require('./routes/packageRoutes')
+const packageRoutes = require('./routes/packageRoutes');
+const cors = require('cors');
 
 const app = express();
 const port = 3321;
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/products', productRoutes);
 app.use('/packages', packageRoutes);
