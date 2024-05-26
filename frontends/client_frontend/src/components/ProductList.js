@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProducts } from '../api/api.js';
+import '../style/ProductList.css';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -14,11 +15,11 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="product-list-container">
       <h2>Products</h2>
-      <ul>
+      <ul className="product-list">
         {products.map(product => (
-          <li key={product.id}>
+          <li key={product.id} className="product-item">
             <Link to={`/products/${product.id}`}>{product.name}</Link>
           </li>
         ))}
