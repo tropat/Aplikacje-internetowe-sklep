@@ -1,0 +1,85 @@
+/* PackagesHistory.css */
+
+.packages-history-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .packages-history-container h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .packages-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .packages-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .packages-item p {
+    margin: 5px 0;
+    font-size: 1.1em;
+    color: #666;
+  }
+  
+  .product-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0 20px;
+  }
+  
+  .product-item {
+    font-size: 1em;
+    color: #333;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button-group-left {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button-group-right {
+    margin-left: auto;
+  }
+  
+  .button-green {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .button-red {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .button-green:hover {
+    background-color: darkgreen;
+  }
+  
+  .button-red:hover {
+    background-color: darkred;
+  }

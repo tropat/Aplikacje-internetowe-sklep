@@ -98,6 +98,7 @@ const updatePackageStatus = async (req, res) => {
     if (!package) {
       return res.status(404).json({ error: `Package with ID ${id} not found` });
     }
+    console.log(status);
 
     if (!['pending', 'shipped', 'delivered'].includes(status)) {
       return res.status(400).json({ error: 'Invalid status provided' });
@@ -131,11 +132,27 @@ const updatePackageDeliverer = async (req, res) => {
   }
 };
 
+const deletePackageById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const package = await Package.findByPk(id);
+    if (package) {
+      await package.destroy();
+      res.json({ message: `Package with ID ${id} deleted` });
+    } else {
+      return res.status(404).json({ error: `Package with ID ${id} not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to delete package with ID ${id}` });
+  }
+};
+
 module.exports = {
   getAllPackages,
   getPackageById,
   getPackagesByDelivererId,
   createPackage,
   updatePackageStatus,
-  updatePackageDeliverer
+  updatePackageDeliverer,
+  deletePackageById
 };

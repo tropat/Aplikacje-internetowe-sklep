@@ -5,7 +5,8 @@ const {
   getPackagesByDelivererId,
   createPackage,
   updatePackageStatus,
-  updatePackageDeliverer
+  updatePackageDeliverer,
+  deletePackageById
 } = require('../controllers/packageController');
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.get('/:id', getPackageById);
 router.get('/deliverer/:deliverer_id', getPackagesByDelivererId);
 router.post('/', createPackage);
 router.put('/status/:id', updatePackageStatus);
-router.put('/deliverer/:id', updatePackageDeliverer); // Temporary
+router.put('/deliverer/:id', updatePackageDeliverer);
+router.delete('/:id', deletePackageById);
 
 module.exports = router;
