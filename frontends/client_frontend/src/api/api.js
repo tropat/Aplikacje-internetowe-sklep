@@ -23,5 +23,6 @@ export const createOrder = async (order) => {
     },
     body: JSON.stringify(order)
   });
+
   return response.json();
 };

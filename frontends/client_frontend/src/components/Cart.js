@@ -4,10 +4,6 @@ import '../style/Cart.css';
 const Cart = ({ cartItems, removeFromCart, onBuy }) => {
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
-  const handleBuy = () => {
-    onBuy();
-  };
-
   return (
     <div className="cart-container">
       <h2>Cart</h2>
@@ -20,7 +16,7 @@ const Cart = ({ cartItems, removeFromCart, onBuy }) => {
         ))}
       </ul>
       <p className="total-amount">Total: ${totalAmount}</p>
-      <button className="buy-button" onClick={handleBuy}>Buy</button>
+      <button className="buy-button" onClick={onBuy}>Buy</button>
     </div>
   );
 };
