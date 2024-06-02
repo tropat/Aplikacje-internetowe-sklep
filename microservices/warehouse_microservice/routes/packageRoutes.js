@@ -11,12 +11,12 @@ const {
 
 const router = express.Router();
 
-router.get('/', getAllPackages);
-router.get('/:id', getPackageById);
-router.get('/deliverer/:deliverer_id', getPackagesByDelivererId);
-router.post('/', createPackage);
-router.put('/status/:id', updatePackageStatus);
-router.put('/deliverer/:id', updatePackageDeliverer);
-router.delete('/:id', deletePackageById);
+router.get('/', authenticateToken, getAllPackages);
+router.get('/:id', authenticateToken, getPackageById);
+router.get('/deliverer/:deliverer_id', authenticateToken, getPackagesByDelivererId);
+router.post('/', authenticateToken, createPackage);
+router.put('/status/:id', authenticateToken, updatePackageStatus);
+router.put('/deliverer/:id', authenticateToken, updatePackageDeliverer);
+router.delete('/:id', authenticateToken, deletePackageById);
 
 module.exports = router;

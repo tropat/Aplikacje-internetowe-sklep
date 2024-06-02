@@ -95,7 +95,7 @@ Mikroserwis logowania:
 
   RESPONSE {id, username}
 
-- GET /users/login
+- POST /users/login
 
   BODY {username, password}
 

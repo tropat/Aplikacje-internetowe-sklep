@@ -1,4 +1,6 @@
 const express = require('express');
+const authenticateToken = require('../middleware/authenticateToken');
+
 const {
   getAllOrders,
   getOrderById,
@@ -10,11 +12,11 @@ const {
 
 const router = express.Router();
 
-router.get('/', getAllOrders);
-router.get('/:id', getOrderById);
-router.get('/user/:user_id', getOrdersByUserId);
-router.post('/', createOrder);
-router.put('/:id', updateOrderStatus);
-router.delete('/:id', deleteOrder); // Temporary
+router.get('/', authenticateToken, getAllOrders);
+router.get('/:id', authenticateToken, getOrderById);
+router.get('/user/:user_id', authenticateToken, getOrdersByUserId);
+router.post('/', authenticateToken, createOrder);
+router.put('/:id', authenticateToken, updateOrderStatus);
+router.delete('/:id', authenticateToken, deleteOrder); // Temporary
 
 module.exports = router;
