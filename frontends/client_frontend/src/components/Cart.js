@@ -2,7 +2,7 @@ import React from 'react';
 import '../style/Cart.css';
 
 const Cart = ({ cartItems, removeFromCart, onBuy }) => {
-  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
+  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0).toFixed(2);
 
   return (
     <div className="cart-container">
