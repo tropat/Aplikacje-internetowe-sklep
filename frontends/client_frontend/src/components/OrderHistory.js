@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { fetchOrders } from '../api/api.js';
 import '../style/OrderHistory.css';
 
-const OrderHistory = () => {
+const OrderHistory = ({ token }) => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const getOrders = async () => {
-      const orders = await fetchOrders();
+      const orders = await fetchOrders(token);
       setOrders(orders.reverse());
     };
     getOrders();

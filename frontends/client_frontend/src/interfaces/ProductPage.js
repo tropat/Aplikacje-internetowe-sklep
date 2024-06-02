@@ -1,9 +1,9 @@
 import React from 'react';
 import ProductDetail from '../components/ProductDetail';
 
-const ProductPage = ({ addToCart }) => (
+const ProductPage = ({ auth, addToCart }) => (
   <div>
-    <ProductDetail addToCart={addToCart} />
+    <ProductDetail token={auth?.accessToken} addToCart={addToCart} />
   </div>
 );
 
