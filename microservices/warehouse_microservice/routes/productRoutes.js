@@ -6,7 +6,7 @@ const {
 
 const router = express.Router();
 
-router.get('/', getAllProducts);
-router.get('/:id', getProductById);
+router.get('/', authenticateToken, getAllProducts);
+router.get('/:id', authenticateToken, getProductById);
 
 module.exports = router;

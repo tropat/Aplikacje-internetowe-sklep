@@ -1,18 +1,18 @@
 const express = require('express');
 const { initDb } = require('./models/index');
 const productRoutes = require('./routes/productRoutes');
-const orderRoutes = require('./routes/orderRoutes');
+const packageRoutes = require('./routes/packageRoutes');
 const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const port = 3320;
+const port = 3321;
 
 app.use(express.json());
 app.use(cors());
 
 app.use('/products', productRoutes);
-app.use('/orders', orderRoutes);
+app.use('/packages', packageRoutes);
 
 initDb().then(() => {
   app.listen(port, () => {
