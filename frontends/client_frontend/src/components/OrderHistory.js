@@ -8,7 +8,7 @@ const OrderHistory = () => {
   useEffect(() => {
     const getOrders = async () => {
       const orders = await fetchOrders();
-      setOrders(orders);
+      setOrders(orders.reverse());
     };
     getOrders();
   }, []);
