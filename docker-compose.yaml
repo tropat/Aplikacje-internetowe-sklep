@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  client_frontend:
+    build:
+      context: ./frontends/client_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - shop_microservice
+      - warehouse_microservice
+      - auth_microservice
+
+  deliverer_frontend:
+    build:
+      context: ./frontends/deliverer_frontend
+    ports:
+      - "3001:3000"
+    depends_on:
+      - shop_microservice
+      - warehouse_microservice
+      - auth_microservice
+
+  shop_microservice:
+    build:
+      context: ./microservices/shop_microservice
+    ports:
+      - "3320:3320"
+
+  warehouse_microservice:
+    build:
+      context: ./microservices/warehouse_microservice
+    ports:
+      - "3321:3321"
+
+  auth_microservice:
+    build:
+      context: ./microservices/auth_microservice
+    ports:
+      - "3322:3322"
