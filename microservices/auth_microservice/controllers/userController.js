@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
 const _generateAccessToken = (user) => {
-  return jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET);
+  return jwt.sign({ userId: user.id, role: user.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 }
 
 const addUser = async (req, res) => {
@@ -16,7 +16,7 @@ const addUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({ username, password: hashedPassword, role });
-    res.status(201).json({ message: 'Registraction successful' });
+    res.status(201).json({ message: 'Registration successful' });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -39,12 +39,21 @@ const getAuth = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username } });
+
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
+
+    const origin = req.headers.origin || req.headers.referer;
+    const clientRole = origin.includes('3000') ? 'client' : (origin.includes('3001') ? 'deliverer' : null);
+
+    if (!clientRole || user.role !== clientRole) {
+      return res.status(403).json({ error: 'Access forbidden: insufficient role' });
+    }
+
     const accessToken = _generateAccessToken(user);
 
-    res.status(200).json({ message: 'Authentication successful', accessToken: accessToken });
+    res.status(200).json({ message: 'Authentication successful', accessToken: accessToken, id: user.id });
   } catch (error) {
     res.status(500).json({ error: 'Authentication unsuccessful' });
   }

@@ -1,10 +1,10 @@
 import React from 'react';
 import ProductList from '../components/ProductList';
 
-const HomePage = () => (
-  <div>
-    <ProductList />
-  </div>
+const HomePage = ({ auth }) => (
+    <div>
+        <ProductList token={auth?.accessToken} />
+    </div>
 );
 
 export default HomePage;

@@ -1,9 +1,9 @@
 import React from 'react';
 import OrderHistory from '../components/OrderHistory';
 
-const OrdersPage = () => (
+const OrdersPage = ({ auth }) => (
   <div>
-    <OrderHistory />
+    <OrderHistory token={auth?.accessToken} />
   </div>
 );
 
