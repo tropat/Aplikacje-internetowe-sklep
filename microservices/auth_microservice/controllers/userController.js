@@ -53,7 +53,7 @@ const getAuth = async (req, res) => {
 
     const accessToken = _generateAccessToken(user);
 
-    res.status(200).json({ message: 'Authentication successful', accessToken: accessToken });
+    res.status(200).json({ message: 'Authentication successful', accessToken: accessToken, id: user.id });
   } catch (error) {
     res.status(500).json({ error: 'Authentication unsuccessful' });
   }

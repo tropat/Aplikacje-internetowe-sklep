@@ -4,20 +4,20 @@ import '../style/PackagesHistory.css';
 
 const deliverer_id = 2;
 
-const MyPackagesHistory = () => {
+const MyPackagesHistory = ({token, delivererId}) => {
   const [packages, setPackages] = useState([]);
 
   useEffect(() => {
     const getPackagesByDelivererId = async (id) => {
-      const packages = await fetchPackagesByDelivererId(id);
+      const packages = await fetchPackagesByDelivererId(id, token);
       setPackages(packages);
     };
-    getPackagesByDelivererId(deliverer_id);
+    getPackagesByDelivererId(delivererId, token);
   }, []);
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await updatePackageStatus(id, newStatus);
+      await updatePackageStatus(id, newStatus, token);
       setPackages((prevPackages) =>
         prevPackages.map((pkg) =>
           pkg.id === id ? { ...pkg, delivery_status: newStatus } : pkg
@@ -30,14 +30,13 @@ const MyPackagesHistory = () => {
 
   const handlePackageCancel = async (id) => {
     try {
-      await updatePackageDeliverer(id, null);
+      await updatePackageDeliverer(id, null, token);
       setPackages((prevPackages) =>
         prevPackages.map((pkg) =>
           pkg.id === id ? { ...pkg, deliverer_id: null } : pkg
         )
       );
       alert('Package delivery has been successfully canceled.');
-      window.location.reload();
     } catch (error) {
       console.error('Error updating package deliverer:', error);
       alert('Failed to cancel package delivery. Please try again later.');

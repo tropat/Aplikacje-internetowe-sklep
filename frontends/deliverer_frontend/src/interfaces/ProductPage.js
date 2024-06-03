@@ -1,9 +1,9 @@
 import React from 'react';
 import ProductDetail from '../components/ProductDetail';
 
-const ProductPage = () => (
+const ProductPage = ({auth}) => (
   <div>
-    <ProductDetail />
+    <ProductDetail token={auth.accessToken}/>
   </div>
 );
 

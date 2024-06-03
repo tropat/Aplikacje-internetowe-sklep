@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../api/api.js';
 import '../style/ProductDetail.css';
 
-const ProductDetail = () => {
+const ProductDetail = ({token}) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
     const getProduct = async () => {
-      const product = await fetchProductById(id);
+      const product = await fetchProductById(id, token);
       setProduct(product);
     };
     getProduct();

@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { fetchProducts } from '../api/api.js';
 import '../style/ProductList.css';
 
-const ProductList = () => {
+const ProductList = ({token}) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
-      const products = await fetchProducts();
+      const products = await fetchProducts(token);
       setProducts(products);
     };
     getProducts();

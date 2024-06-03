@@ -4,12 +4,13 @@ import '../style/PackagesHistory.css';
 
 const deliverer_id = 2;
 
-const PackagesHistory = () => {
+const PackagesHistory = ({token, delivererId}) => {
   const [packages, setPackages] = useState([]);
 
   useEffect(() => {
     const getPackages = async () => {
-      const packages = await fetchPackages();
+      console.log(delivererId);
+      const packages = await fetchPackages(token);
       setPackages(packages);
     };
     getPackages();
@@ -24,14 +25,13 @@ const PackagesHistory = () => {
     }
   
     try {
-      await updatePackageDeliverer(id, deliverer_id);
+      await updatePackageDeliverer(id, delivererId, token);
       setPackages((prevPackages) =>
         prevPackages.map((pkg) =>
-          pkg.id === id ? { ...pkg, deliverer_id: deliverer_id } : pkg
+          pkg.id === id ? { ...pkg, deliverer_id: delivererId } : pkg
         )
       );
       alert('Package delivery has been assigned to you.');
-      window.location.reload();
     } catch (error) {
       console.error('Error updating package deliverer:', error);
       alert('Failed to update package deliverer. Please try again later.');
@@ -40,9 +40,8 @@ const PackagesHistory = () => {
 
   const handleDeletePackageById = async (id) => {
     try {
-      await deletePackageById(id);
+      await deletePackageById(id, token);
       alert('Package has been successfully deleted.');
-      window.location.reload();
     } catch (error) {
       console.error('Error deleting package:', error);
       alert('Failed to delete package. Please try again later.');
@@ -69,7 +68,7 @@ const PackagesHistory = () => {
             </ul>
             <div className="button-group">
               <div className="button-group-left">
-                <button className="button-green" onClick={() => handleUpdatePackageDeliverer(pkg.id, deliverer_id)}>Assign Delivery</button>
+                <button className="button-green" onClick={() => handleUpdatePackageDeliverer(pkg.id, delivererId)}>Assign Delivery</button>
               </div>
               <div className="button-group-right">
                 <button className="button-red" onClick={() => handleDeletePackageById(pkg.id)}>Delete Package</button>
