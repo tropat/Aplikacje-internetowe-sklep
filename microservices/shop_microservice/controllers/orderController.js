@@ -1,4 +1,5 @@
 const { Product, Order } = require('../models');
+const jwt = require('jsonwebtoken');
 
 const _calculateTotalAmount = async (products) => {
   let totalAmount = 0;
@@ -104,8 +105,25 @@ const createOrder = async (req, res) => {
       total_amount: totalAmount,
       address: address,
       datetime: datetime,
-      order_status: 'pending'
+      order_status: 'AwaitingApproval'
     });
+
+    const token = jwt.sign({ user_id }, SERVER_ACCESS_TOKEN_SECRET);
+
+    const response = await fetch('http://localhost:3321/packages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ address, products })
+    });
+
+    if (response.ok) {
+      newOrder.order_status = 'pending';
+      await newOrder.save();
+    }
+
     res.status(201).json(newOrder);
   } catch (error) {
     res.status(500).json({ error: 'Failed to create order' });
