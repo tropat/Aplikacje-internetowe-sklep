@@ -9,7 +9,6 @@ const ProductList = ({ token }) => {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                console.log(token);
                 const products = await fetchProducts(token);
                 setProducts(products);
             } catch (error) {
