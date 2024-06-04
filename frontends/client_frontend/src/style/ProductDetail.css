@@ -1,6 +1,7 @@
 .product-detail-container {
   max-width: 800px;
   margin: 0 auto;
+  margin-top: 50px;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 10px;
@@ -33,7 +34,8 @@
 
 .product-detail-container .add-to-cart-button {
   display: block;
-  width: 100%;
+  width: 50%;
+  margin: auto;
   padding: 10px;
   background-color: #4CAF50;
   color: #fff;

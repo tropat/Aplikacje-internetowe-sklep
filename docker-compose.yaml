@@ -15,7 +15,7 @@ services:
     build:
       context: ./frontends/deliverer_frontend
     ports:
-      - "3001:3000"
+      - "3001:3001"
     depends_on:
       - shop_microservice
       - warehouse_microservice
@@ -26,15 +26,27 @@ services:
       context: ./microservices/shop_microservice
     ports:
       - "3320:3320"
+    volumes:
+      - type: bind
+        source: ./microservices/shop_microservice
+        target: /usr/src/app
 
   warehouse_microservice:
     build:
       context: ./microservices/warehouse_microservice
     ports:
       - "3321:3321"
+    volumes:
+      - type: bind
+        source: ./microservices/warehouse_microservice
+        target: /usr/src/app
 
   auth_microservice:
     build:
       context: ./microservices/auth_microservice
     ports:
       - "3322:3322"
+    volumes:
+      - type: bind
+        source: ./microservices/auth_microservice
+        target: /usr/src/app

@@ -7,6 +7,8 @@ const Navbar = ({ auth, setAuth }) => {
 
     const handleLogout = () => {
         setAuth(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
         navigate('/login');
     };
 

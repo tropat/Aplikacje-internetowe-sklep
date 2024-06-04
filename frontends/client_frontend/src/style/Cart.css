@@ -1,6 +1,7 @@
 .cart-container {
     max-width: 800px;
     margin: 0 auto;
+    margin-top: 50px;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
@@ -51,6 +52,8 @@
   }
   
   .buy-button {
+    width: 50%;
+    margin: auto;
     display: block;
     width: 100%;
     padding: 10px;

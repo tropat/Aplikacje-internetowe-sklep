@@ -26,8 +26,8 @@ export const fetchProductById = async (id, token) => {
   return handleResponse(response);
 };
 
-export const fetchOrders = async (token) => {
-  const response = await fetch(`${API_URL}/orders`, {
+export const fetchOrders = async (token, user_id) => {
+  const response = await fetch(`${API_URL}/user/${user_id}`, {
     headers: {
       'authorization': `Bearer ${token}`
     }
