@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
 const _generateAccessToken = (user) => {
-  return jwt.sign({ userId: user.id, role: user.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ userId: user.id, role: user.role }, process.env.ACCESS_TOKEN_SECRET);
 }
 
 const addUser = async (req, res) => {

@@ -1,5 +1,5 @@
 const express = require('express');
-const authenticateToken = require('../middlewares/authMiddleware');
+const { authenticateToken, authorizeServer } = require('../middlewares/authMiddleware');
 
 const {
   getAllPackages,
@@ -16,7 +16,7 @@ const router = express.Router();
 router.get('/', authenticateToken, getAllPackages);
 router.get('/:id', authenticateToken, getPackageById);
 router.get('/deliverer/:deliverer_id', authenticateToken, getPackagesByDelivererId);
-router.post('/', authenticateToken, createPackage);
+router.post('/', authorizeServer, createPackage);
 router.put('/status/:id', authenticateToken, updatePackageStatus);
 router.put('/deliverer/:id', authenticateToken, updatePackageDeliverer);
 router.delete('/:id', authenticateToken, deletePackageById);
