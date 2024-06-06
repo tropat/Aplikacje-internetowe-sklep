@@ -3,17 +3,18 @@ import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../api/api.js';
 import '../style/ProductDetail.css';
 
-const ProductDetail = ({token}) => {
+const ProductDetail = ({auth}) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
     const getProduct = async () => {
-      const product = await fetchProductById(id, token);
+      const response = await fetchProductById(id, auth?.accessToken);
+      const product = await response.json();
       setProduct(product);
     };
     getProduct();
-  }, [id]);
+  }, [id, auth?.accessToken]);
 
   if (!product) return <div>Loading...</div>;
 

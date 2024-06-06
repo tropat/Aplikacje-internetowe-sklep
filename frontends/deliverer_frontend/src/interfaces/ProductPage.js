@@ -3,7 +3,7 @@ import ProductDetail from '../components/ProductDetail';
 
 const ProductPage = ({auth}) => (
   <div>
-    <ProductDetail token={auth.accessToken}/>
+    <ProductDetail auth={auth}/>
   </div>
 );
 

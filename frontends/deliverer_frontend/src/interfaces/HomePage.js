@@ -3,7 +3,7 @@ import ProductList from '../components/ProductList';
 
 const HomePage = ({auth}) => (
   <div>
-    <ProductList token={auth.accessToken} />
+    <ProductList auth={auth} />
   </div>
 );
 
