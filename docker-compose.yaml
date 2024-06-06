@@ -15,7 +15,7 @@ services:
     build:
       context: ./frontends/deliverer_frontend
     ports:
-      - "3001:3001"
+      - "3001:3000"
     depends_on:
       - shop_microservice
       - warehouse_microservice
