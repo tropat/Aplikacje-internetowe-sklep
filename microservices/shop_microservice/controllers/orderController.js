@@ -108,24 +108,25 @@ const createOrder = async (req, res) => {
       order_status: 'AwaitingApproval'
     });
 
-    const token = jwt.sign({ user_id }, SERVER_ACCESS_TOKEN_SECRET);
+    // const token = jwt.sign({ user_id }, process.env.SERVER_ACCESS_TOKEN_SECRET); // TODO FIX
 
-    const response = await fetch('http://localhost:3321/packages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ address, products })
-    });
+    // const response = await fetch('http://localhost:3321/packages', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${token}`
+    //   },
+    //   body: JSON.stringify({ address, products })
+    // });
 
-    if (response.ok) {
-      newOrder.order_status = 'pending';
-      await newOrder.save();
-    }
+    // if (response.ok) {
+    //   newOrder.order_status = 'pending';
+    //   await newOrder.save();
+    // }
 
     res.status(201).json(newOrder);
   } catch (error) {
+    console.log('CreateOrder error: ', error);
     res.status(500).json({ error: 'Failed to create order' });
   }
 };

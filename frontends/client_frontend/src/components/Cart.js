@@ -3,13 +3,14 @@ import '../style/Cart.css';
 
 const Cart = ({ cartItems, removeFromCart, onBuy }) => {
   const [showEmptyMessage, setShowEmptyMessage] = useState(false);
+  const [address, setAddress] = useState('');
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0).toFixed(2);
 
   const handleBuyClick = () => {
-    if (parseFloat(totalAmount) === 0) {
+    if (parseFloat(totalAmount) === 0 || address.trim() === '') {
       setShowEmptyMessage(true);
     } else {
-      onBuy();
+      onBuy(address);
     }
   };
 
@@ -25,7 +26,15 @@ const Cart = ({ cartItems, removeFromCart, onBuy }) => {
         ))}
       </ul>
       <p className="total-amount">Total: ${totalAmount}</p>
-      {showEmptyMessage && <p className="empty-cart-message">Koszyk jest pusty</p>}
+      <input
+        type="text"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder="Enter your address"
+        className="address-input"
+        required
+      />
+      {showEmptyMessage && <p className="empty-cart-message">Cart is empty or address is missing</p>}
       <button className="buy-button" onClick={handleBuyClick}>Buy</button>
     </div>
   );

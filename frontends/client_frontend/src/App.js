@@ -2,17 +2,17 @@ import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import HomePage from './interfaces/HomePage';
-import ProductPage from './interfaces/ProductPage';
-import CartPage from './interfaces/CartPage';
-import OrdersPage from './interfaces/OrdersPage';
-import LoginPage from './interfaces/LoginPage';
-import RegisterPage from './interfaces/RegisterPage';
-import { createOrder, fetchOrders, fetchProducts, fetchProductById } from './api/api';
+import HomePage from './pages/HomePage';
+import ProductPage from './pages/ProductPage';
+import CartPage from './pages/CartPage';
+import OrdersPage from './pages/OrdersPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import { createOrder } from './api/api';
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState({user_id: localStorage.getItem('user_id'), accessToken: localStorage.getItem('token')});
 
   const addToCart = (product) => {
     setCartItems([...cartItems, product]);
@@ -24,25 +24,24 @@ const App = () => {
     setCartItems(newCartItems);
   };
 
-  const onBuy = async () => {
+  const onBuy = async (address) => {
     try {
-      const orders = await fetchOrders(auth?.accessToken);
-      const maxId = orders.length > 0 ? Math.max(...orders.map(order => order.id)) : 0;
-      const newOrderId = maxId + 1;
+      if (!address.trim()) {
+        alert('Please enter your address.');
+        return;
+      }
 
       const order = {
-        user_id: newOrderId,
+        user_id: auth?.user_id,
         products: cartItems.map(item => item.id),
-        address: '123 Main Street, Warsaw, Poland'
+        address: address,
       };
 
-      console.log('Order:', order);
-
       const response = await createOrder(order, auth?.accessToken);
-      console.log('Server Response:', response);
 
-      if (response) {
+      if (response.ok) {
         setCartItems([]);
+        console.log(response);
         alert('The order was successful!');
       } else {
         alert('Failed to place order.');
