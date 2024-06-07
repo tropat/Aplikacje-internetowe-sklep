@@ -7,8 +7,21 @@ const OrdersPage = ({ auth }) => {
 
   useEffect(() => {
     const getOrders = async () => {
-      const orders = await fetchOrders(auth?.accessToken, auth?.user_id);
-      setOrders(orders.reverse());
+      try {
+        const response = await fetchOrders(auth?.accessToken, auth?.user_id);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          alert(errorData.error || 'Failed to retrieve orders');
+          console.log('Error fetching orders:', errorData.error || 'Failed to retrieve orders');
+        } else {
+          const ordersData = await response.json();
+          setOrders(ordersData.reverse());
+        }
+      } catch (error) {
+        alert('Failed to retrieve orders');
+        console.log('Error caught fetching orders:', error);
+      }
     };
     getOrders();
   }, [auth?.accessToken, auth?.user_id]);

@@ -30,6 +30,7 @@ const getAllPackages = async (req, res) => {
     const packageResponses = await Promise.all(packages.map(package => _createPackageResponse(package)));
     res.json(packageResponses);
   } catch (error) {
+    console.log('Error getAllPackages: ', error);
     res.status(500).json({ error: 'Failed to retrieve packages' });
   }
 };
@@ -44,6 +45,7 @@ const getPackageById = async (req, res) => {
     const packageResponse = await _createPackageResponse(package);
     res.json(packageResponse);
   } catch (error) {
+    console.log('Error getPackageById: ', error);
     res.status(500).json({ error: `Failed to retrieve package with ID ${id}` });
   }
 };
@@ -58,6 +60,7 @@ const getPackagesByDelivererId = async (req, res) => {
     const packageResponses = await Promise.all(packages.map(package => _createPackageResponse(package)));
     res.json(packageResponses);
   } catch (error) {
+    console.log('Error getPackagesByDelivererId: ', error);
     res.status(500).json({ error: `Failed to retrieve packages for user with ID ${deliverer_id}` });
   }
 };
@@ -85,6 +88,7 @@ const createPackage = async (req, res) => {
     });
     res.status(201).json(newPackage);
   } catch (error) {
+    console.log('Error createPackage: ', error);
     res.status(500).json({ error: 'Failed to create package' });
   }
 };
@@ -109,6 +113,7 @@ const updatePackageStatus = async (req, res) => {
 
     res.json(package);
   } catch (error) {
+    console.log('Error updatePackageStatus: ', error);
     res.status(500).json({ error: `Failed to update package status for ID ${id}` });
   }
 };
@@ -128,6 +133,7 @@ const updatePackageDeliverer = async (req, res) => {
 
     res.json(package);
   } catch (error) {
+    console.log('Error updatePackageDeliverer: ', error);
     res.status(500).json({ error: `Failed to update package deliverer for ID ${id}` });
   }
 };
@@ -143,6 +149,7 @@ const deletePackageById = async (req, res) => {
       return res.status(404).json({ error: `Package with ID ${id} not found` });
     }
   } catch (error) {
+    console.log('Error deletePackageById: ', error);
     res.status(500).json({ error: `Failed to delete package with ID ${id}` });
   }
 };

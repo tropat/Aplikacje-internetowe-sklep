@@ -10,11 +10,16 @@ const ProductDetail = ({ token, addToCart }) => {
 
   useEffect(() => {
     const getProduct = async () => {
-      const product = await fetchProductById(id, token);
-      setProduct(product);
+      try {
+        const response = await fetchProductById(id, token);
+        const productData = await response.json();
+        setProduct(productData);
+      } catch (error) {
+        console.error('Failed to fetch product:', error);
+      }
     };
     getProduct();
-  }, [id]);
+  }, [id, token]);
 
   const handleAddToCart = () => {
     addToCart(product);
