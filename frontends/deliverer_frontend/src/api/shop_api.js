@@ -16,3 +16,15 @@ export const fetchProductById = async (id, token) => {
   });
   return handleResponse(response);
 };
+
+export const updateOrderStatus = async (id, status, token) => {
+  const response = await fetch(`${API_URL}/orders/${id}`, {
+      method: 'PUT',
+      headers: {
+      'authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(status)
+  });
+  return handleResponse(response);
+};

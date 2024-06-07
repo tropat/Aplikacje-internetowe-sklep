@@ -2,13 +2,15 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../style/Navbar.css';
 
-const Navbar = ({ auth, setAuth }) => {
+const Navbar = ({ auth, setAuth, clearCart }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
         setAuth(null);
         localStorage.removeItem('token');
         localStorage.removeItem('user_id');
+        localStorage.removeItem('cart_items');
+        clearCart();
         navigate('/login');
     };
 

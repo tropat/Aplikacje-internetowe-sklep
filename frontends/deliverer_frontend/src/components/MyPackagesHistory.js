@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPackagesByDelivererId, updatePackageStatus, updatePackageDeliverer } from '../api/api.js';
-import { fetchProductById } from '../api/shop_api.js';
+import { fetchProductById, updateOrderStatus } from '../api/shop_api.js';
 import { Link } from 'react-router-dom';
 import '../style/PackagesHistory.css';
 
@@ -41,13 +41,14 @@ const MyPackagesHistory = ({ auth }) => {
   const handleStatusChange = async (id, newStatus) => {
     try {
       await updatePackageStatus(id, newStatus, auth?.accessToken);
+      // await updateOrderStatus(id, newStatus, auth?.accessToken);
       setPackages((prevPackages) =>
         prevPackages.map((pkg) =>
           pkg.id === id ? { ...pkg, delivery_status: newStatus } : pkg
         )
       );
     } catch (error) {
-      console.error('Error updating package status:', error);
+      console.error('Error updating package or order status:', error);
     }
   };
 
