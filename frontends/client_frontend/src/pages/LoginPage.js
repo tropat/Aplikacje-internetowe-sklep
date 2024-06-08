@@ -16,14 +16,23 @@ const LoginPage = ({ setAuth }) => {
     setError('');
     try {
       const response = await login({ username, password });
-      if (response.accessToken) {
-        setAuth({user_id: response.id, accessToken: response.accessToken });
-        localStorage.setItem('token', response.accessToken);
-        localStorage.setItem('user_id', response.id);
-        navigate('/');
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (response.status === 401) {
+          setError('Invalid credentials');
+        } else if (response.status === 403) {
+          setError('Access forbidden: insufficient role');
+        } else {
+          setError(errorData.error || 'Error logging in');
+        }
+        alert(errorData.error || 'Error logging in');
       } else {
-        setError('Invalid credentials');
-        alert('Invalid credentials');
+        const data = await response.json();
+        setAuth({ user_id: data.id, accessToken: data.accessToken });
+        localStorage.setItem('token', data.accessToken);
+        localStorage.setItem('user_id', data.id);
+        navigate('/');
       }
     } catch (error) {
       setError('Error logging in');

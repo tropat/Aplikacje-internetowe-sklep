@@ -15,10 +15,10 @@ const Navbar = ({ auth, setAuth }) => {
     return (
         <nav>
             <ul>
-                <li><Link to="/">Home</Link></li>
+                <li><Link to="/">Products</Link></li>
                 <li><Link to="/cart">Cart</Link></li>
                 <li><Link to="/orders">Orders</Link></li>
-                {auth ? (
+                {auth?.user_id && auth?.accessToken ? (
                     <li>
                         <Link onClick={handleLogout}>Logout</Link>
                     </li>

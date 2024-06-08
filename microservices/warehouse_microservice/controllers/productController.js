@@ -5,6 +5,7 @@ const getAllProducts = async (req, res) => {
     const products = await Product.findAll();
     res.json(products);
   } catch (error) {
+    console.log('Error getAllProducts: ', error);
     res.status(500).json({ error: 'Failed to retrieve products' });
   }
 };
@@ -19,6 +20,7 @@ const getProductById = async (req, res) => {
       res.status(404).json({ error: `Product with ID ${id} not found` });
     }
   } catch (error) {
+    console.log('Error getProductById: ', error);
     res.status(500).json({ error: `Failed to retrieve product with ID ${id}` });
   }
 };

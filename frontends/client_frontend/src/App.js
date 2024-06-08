@@ -38,10 +38,8 @@ const App = () => {
       };
 
       const response = await createOrder(order, auth?.accessToken);
-
       if (response.ok) {
         setCartItems([]);
-        console.log(response);
         alert('The order was successful!');
       } else {
         alert('Failed to place order.');
@@ -68,7 +66,7 @@ const App = () => {
 };
 
 const PrivateRoute = ({ auth, children }) => {
-  return auth ? children : <Navigate to="/login" />;
+  return auth?.user_id && auth?.accessToken ? children : <Navigate to="/login" />;
 };
 
 export default App;

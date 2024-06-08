@@ -9,8 +9,9 @@ const ProductList = ({ token }) => {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const products = await fetchProducts(token);
-                setProducts(products);
+                const response = await fetchProducts(token);
+                const productsData = await response.json();
+                setProducts(productsData);
             } catch (error) {
                 console.error('Error fetching products:', error.message);
             }

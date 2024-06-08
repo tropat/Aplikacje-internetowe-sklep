@@ -48,6 +48,7 @@ const getAllOrders = async (req, res) => {
     const orderResponses = await Promise.all(orders.map(order => _createOrderResponse(order)));
     res.json(orderResponses);
   } catch (error) {
+    console.log('Error getAllOrders: ', error);
     res.status(500).json({ error: 'Failed to retrieve orders' });
   }
 };
@@ -62,6 +63,7 @@ const getOrderById = async (req, res) => {
     const orderResponse = await _createOrderResponse(order);
     res.json(orderResponse);
   } catch (error) {
+    console.log('Error getOrderById: ', error);
     res.status(500).json({ error: `Failed to retrieve order with ID ${id}` });
   }
 };
@@ -76,6 +78,7 @@ const getOrdersByUserId = async (req, res) => {
     const orderResponses = await Promise.all(orders.map(order => _createOrderResponse(order)));
     res.json(orderResponses);
   } catch (error) {
+    console.log('Error getOrdersByUserId: ', error);
     res.status(500).json({ error: `Failed to retrieve orders for user with ID ${user_id}` });
   }
 };
@@ -150,11 +153,12 @@ const updateOrderStatus = async (req, res) => {
 
     res.json({ message: `Order with ID ${id} status updated to ${status}` });
   } catch (error) {
+    console.log('Error updateOrderStatus: ', error);
     res.status(500).json({ error: `Failed to update order status for ID ${id}` });
   }
 };
 
-const deleteOrder = async (req, res) => { // Temporary
+const deleteOrder = async (req, res) => {
   const { id } = req.params;
   try {
     const order = await Order.findByPk(id);
@@ -165,6 +169,7 @@ const deleteOrder = async (req, res) => { // Temporary
       return res.status(404).json({ error: `Order with ID ${id} not found` });
     }
   } catch (error) {
+    console.log('Error deleteOrder: ', error);
     res.status(500).json({ error: `Failed to delete odrder with ID ${id}` });
   }
 };

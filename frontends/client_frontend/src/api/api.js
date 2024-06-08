@@ -5,7 +5,7 @@ const handleResponse = async (response) => {
     window.location.href = '/login';
     throw new Error('Unauthorized');
   }
-  return response.json();
+  return response;
 };
 
 export const fetchProducts = async (token) => {
@@ -27,7 +27,7 @@ export const fetchProductById = async (id, token) => {
 };
 
 export const fetchOrders = async (token, user_id) => {
-  const response = await fetch(`${API_URL}/user/${user_id}`, {
+  const response = await fetch(`${API_URL}/orders/user/${user_id}`, {
     headers: {
       'authorization': `Bearer ${token}`
     }
@@ -44,7 +44,7 @@ export const createOrder = async (order, token) => {
     },
     body: JSON.stringify(order)
   });
-
+  console.log(`createOrder: Status: ${response.status}, Message: ${response.statusText}`);
   return handleResponse(response);
 };
 
@@ -57,7 +57,7 @@ export const login = async (credentials) => {
     body: JSON.stringify(credentials)
   });
 
-  return response.json();
+  return response;
 };
 
 export const register = async (credentials) => {
