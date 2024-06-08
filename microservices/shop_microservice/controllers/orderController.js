@@ -119,7 +119,7 @@ const createOrder = async (req, res) => {
     //     'Content-Type': 'application/json',
     //     'Authorization': `Bearer ${token}`
     //   },
-    //   body: JSON.stringify({ address, products })
+    //   body: JSON.stringify({ products, address })
     // });
 
     // if (response.ok) {
