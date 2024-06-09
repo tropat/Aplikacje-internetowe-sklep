@@ -41,7 +41,7 @@ const OrdersPage = ({ auth }) => {
               const errorData = await response.json();
               console.log('Error fetching products:', errorData.error || 'Failed to retrieve products');
             } else {
-              const productDetails = response.json();
+              const productDetails = await response.json();
               prices[productId] = productDetails.price;
             }
           } catch (error) {
