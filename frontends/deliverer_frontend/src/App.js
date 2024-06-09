@@ -26,7 +26,7 @@ const App = () => {
 };
 
 const PrivateRoute = ({ auth, children }) => {
-    return auth ? children : <Navigate to="/login" />;
+  return auth?.user_id && auth?.accessToken ? children : <Navigate to="/login" />;
 };
 
 export default App;
