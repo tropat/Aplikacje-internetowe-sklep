@@ -1,12 +1,20 @@
 const API_URL = 'http://localhost:3321';
 
+const handleResponse = async (response) => {
+  if (response.status === 401) {
+    window.location.href = '/login';
+    throw new Error('Unauthorized');
+  }
+  return response;
+};
+
 export const fetchProducts = async (token) => {
   const response = await fetch(`${API_URL}/products`, {
     headers: {
       'authorization': `Bearer ${token}`
     }
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const fetchProductById = async (id, token) => {
@@ -15,7 +23,7 @@ export const fetchProductById = async (id, token) => {
       'authorization': `Bearer ${token}`
     }
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const fetchPackages = async (token) => {
@@ -24,7 +32,7 @@ export const fetchPackages = async (token) => {
       'authorization': `Bearer ${token}`
     }
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const fetchPackageById = async (id, token) => {
@@ -33,16 +41,16 @@ export const fetchPackageById = async (id, token) => {
       'authorization': `Bearer ${token}`
     }
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const fetchPackagesByDelivererId = async (id, token) => {
   const response = await fetch(`${API_URL}/packages/deliverer/${id}`, {
     headers: {
-      'authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const createPackage = async (new_package, token) => {
@@ -54,7 +62,7 @@ export const createPackage = async (new_package, token) => {
     },
     body: JSON.stringify(new_package)
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const updatePackageStatus = async (id, status, token) => {
@@ -66,7 +74,7 @@ export const updatePackageStatus = async (id, status, token) => {
     },
     body: JSON.stringify({status})
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const updatePackageDeliverer = async (id, deliverer_id, token) => {
@@ -78,7 +86,7 @@ export const updatePackageDeliverer = async (id, deliverer_id, token) => {
     },
     body: JSON.stringify({deliverer_id})
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const deletePackageById = async (id, token) => {
@@ -89,7 +97,7 @@ export const deletePackageById = async (id, token) => {
       'authorization': `Bearer ${token}`
     }
   });
-  return response.json();
+  return handleResponse(response);
 };
 
 export const login = async (credentials) => {
@@ -100,6 +108,5 @@ export const login = async (credentials) => {
     },
     body: JSON.stringify(credentials)
   });
-
-  return response.json();
+  return handleResponse(response);
 };

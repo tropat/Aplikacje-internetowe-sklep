@@ -1,9 +1,9 @@
 import React from 'react';
 import PackagesHistory from '../components/PackagesHistory';
 
-const PackagesPage = ({auth, delivererId}) => (
+const PackagesPage = ({auth}) => (
   <div>
-    <PackagesHistory token={auth.accessToken} delivererId={delivererId}/>
+    <PackagesHistory auth={auth}/>
   </div>
 );
 
