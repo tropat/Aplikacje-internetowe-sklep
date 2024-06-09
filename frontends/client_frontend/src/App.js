@@ -1,4 +1,3 @@
-import './App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -16,7 +15,7 @@ const App = () => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
   const [auth, setAuth] = useState({user_id: localStorage.getItem('user_id'), accessToken: localStorage.getItem('token')});
-  
+
   useEffect(() => {
     localStorage.setItem('cart_items', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -33,7 +32,7 @@ const App = () => {
       }
     });
   };
-  
+
   const removeFromCart = (productId) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
   };
@@ -61,9 +60,11 @@ const App = () => {
         return;
       }
 
+      const products = cartItems.flatMap(item => Array(item.quantity).fill(item.id));
+
       const order = {
         user_id: auth?.user_id,
-        products: cartItems.map(item => item.id),
+        products: products,
         address: address,
       };
 
