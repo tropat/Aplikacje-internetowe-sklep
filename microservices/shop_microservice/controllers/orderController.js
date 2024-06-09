@@ -110,22 +110,22 @@ const createOrder = async (req, res) => {
       datetime: datetime,
       order_status: 'AwaitingApproval'
     });
+    console.log('newOrder: ', newOrder.id);
+    const token = jwt.sign({ service: 'shop' }, process.env.SERVER_ACCESS_TOKEN_SECRET);
 
-    // const token = jwt.sign({ user_id }, process.env.SERVER_ACCESS_TOKEN_SECRET); // TODO FIX
+    const response = await fetch('http://localhost:3321/packages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ products, address, order_id: newOrder.id})
+    });
 
-    // const response = await fetch('http://localhost:3321/packages', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': `Bearer ${token}`
-    //   },
-    //   body: JSON.stringify({ products, address })
-    // });
-
-    // if (response.ok) {
-    //   newOrder.order_status = 'pending';
-    //   await newOrder.save();
-    // }
+    if (response.ok) {
+      newOrder.order_status = 'pending';
+      await newOrder.save();
+    }
 
     res.status(201).json(newOrder);
   } catch (error) {
@@ -158,27 +158,10 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-const deleteOrder = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const order = await Order.findByPk(id);
-    if (order) {
-      await order.destroy();
-      res.json({ message: `Order with ID ${id} deleted` });
-    } else {
-      return res.status(404).json({ error: `Order with ID ${id} not found` });
-    }
-  } catch (error) {
-    console.log('Error deleteOrder: ', error);
-    res.status(500).json({ error: `Failed to delete odrder with ID ${id}` });
-  }
-};
-
 module.exports = {
   getAllOrders,
   getOrderById,
   getOrdersByUserId,
   createOrder,
   updateOrderStatus,
-  deleteOrder
 };

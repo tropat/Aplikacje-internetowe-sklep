@@ -59,9 +59,14 @@ const PackagesHistory = ({ auth }) => {
 
   const handleDeletePackageById = async (id) => {
     try {
-      await deletePackageById(id, auth?.accessToken);
-      alert('Package has been successfully deleted.');
-      window.location.reload();
+      const packageToDelete = packages.find(pkg => pkg.id === id);
+      if(packageToDelete.delivery_status !== "delivered") {
+        alert('Cannot delete undelivered package.');
+      } else {
+        await deletePackageById(id, auth?.accessToken);
+        alert('Package has been successfully deleted.');
+        window.location.reload();
+      }
     } catch (error) {
       console.error('Error deleting package:', error);
       alert('Failed to delete package. Please try again later.');

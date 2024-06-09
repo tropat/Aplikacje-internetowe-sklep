@@ -1,4 +1,5 @@
 const { Product, Package} = require('../models');
+const jwt = require('jsonwebtoken');
 
 const _createPackageResponse = async (package) => {
   const productIds = package.products;
@@ -66,7 +67,7 @@ const getPackagesByDelivererId = async (req, res) => {
 };
 
 const createPackage = async (req, res) => {
-  const { products, address} = req.body;
+  const { products, address, order_id} = req.body;
   try {
     for (const productId of products) {
       const product = await Product.findByPk(productId);
@@ -84,7 +85,8 @@ const createPackage = async (req, res) => {
     const newPackage = await Package.create({
       products: products,
       address: address,
-      order_status: 'pending'
+      order_status: 'pending',
+      order_id: order_id
     });
     res.status(201).json(newPackage);
   } catch (error) {
@@ -102,14 +104,35 @@ const updatePackageStatus = async (req, res) => {
     if (!package) {
       return res.status(404).json({ error: `Package with ID ${id} not found` });
     }
-    console.log(status);
 
     if (!['pending', 'shipped', 'delivered'].includes(status)) {
+      console.log('Invalid status provided');
       return res.status(400).json({ error: 'Invalid status provided' });
     }
 
     package.delivery_status = status;
     await package.save();
+
+    try {
+      const token = jwt.sign({ service: 'warehouse' }, process.env.SERVER_ACCESS_TOKEN_SECRET);
+
+      const response = await fetch(`http://localhost:3320/orders/${package.order_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      });
+
+      if (response.ok) {
+        console.log('Order status updated');
+      } else {
+        console.log('Failed to update order status');
+      }
+    } catch (error) {
+      console.log('Error updating order status: ', error);
+    }
 
     res.json(package);
   } catch (error) {
