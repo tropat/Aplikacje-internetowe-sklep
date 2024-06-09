@@ -29,6 +29,10 @@ const Package = sequelize.define('Packages', {
       isIn: [['pending', 'shipped', 'delivered']],
     },
   },
+  order_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
 }, {
   timestamps: false,
 });
