@@ -49,6 +49,10 @@ Mikroserwis logowania:
 - React v18.2: Do tworzenia interaktywnych interfejsów użytkownika oraz renderowania stron frontendowych.
 - Biblioteka obsługujące autentykację JWT: do zapewnienia bezpiecznego uwierzytelniania i autoryzacji użytkowników.
 
+### Sekrety środowiskowe
+Sekrety, takie jak klucze do generowania i weryfikacji JWT, są przechowywane jako zmienne środowiskowe, które przykładowo są zawarte w plikach .env.
+Dane zmienne środowiskowe powinny zostać zmienione i ukryte podczas faktycznego korzystania z aplikacji w celu zapewnienia bezpieczeństwa.
+
 ### Struktura bazy danych
 
 Mikroserwis logowania
